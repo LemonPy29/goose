@@ -8,7 +8,7 @@ var _ Querier = (*Postgres)(nil)
 
 func (p *Risingwave) CreateTable(tableName string) string {
 	q := `CREATE TABLE %s (
-		id bigint,
+		id bigint primary key default extract(epoch from now()) * 1000,
 		version_id bigint,
 		is_applied boolean,
 		tstamp timestamptz DEFAULT now()
@@ -32,7 +32,7 @@ func (p *Risingwave) GetMigrationByVersion(tableName string) string {
 }
 
 func (p *Risingwave) ListMigrations(tableName string) string {
-	q := `SELECT version_id, is_applied from %s ORDER BY id DESC`
+	q := `SELECT version_id, is_applied from %s ORDER BY version_id DESC`
 	return fmt.Sprintf(q, tableName)
 }
 

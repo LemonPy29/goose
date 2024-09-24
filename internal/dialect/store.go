@@ -95,6 +95,8 @@ type store struct {
 
 var _ Store = (*store)(nil)
 
+const waitTime = 2 * time.Second
+
 func (s *store) CreateVersionTable(ctx context.Context, tx *sql.Tx, tableName string) error {
 	q := s.querier.CreateTable(tableName)
 	_, err := tx.ExecContext(ctx, q)
@@ -104,24 +106,28 @@ func (s *store) CreateVersionTable(ctx context.Context, tx *sql.Tx, tableName st
 func (s *store) InsertVersion(ctx context.Context, tx *sql.Tx, tableName string, version int64) error {
 	q := s.querier.InsertVersion(tableName)
 	_, err := tx.ExecContext(ctx, q, version, true)
+	time.Sleep(waitTime)
 	return err
 }
 
 func (s *store) InsertVersionNoTx(ctx context.Context, db *sql.DB, tableName string, version int64) error {
 	q := s.querier.InsertVersion(tableName)
 	_, err := db.ExecContext(ctx, q, version, true)
+	time.Sleep(waitTime)
 	return err
 }
 
 func (s *store) DeleteVersion(ctx context.Context, tx *sql.Tx, tableName string, version int64) error {
 	q := s.querier.DeleteVersion(tableName)
 	_, err := tx.ExecContext(ctx, q, version)
+	time.Sleep(waitTime)
 	return err
 }
 
 func (s *store) DeleteVersionNoTx(ctx context.Context, db *sql.DB, tableName string, version int64) error {
 	q := s.querier.DeleteVersion(tableName)
 	_, err := db.ExecContext(ctx, q, version)
+	time.Sleep(waitTime)
 	return err
 }
 

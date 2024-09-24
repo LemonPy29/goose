@@ -255,6 +255,7 @@ Drivers:
     vertica
     ydb
     turso
+    risingwave
 
 Examples:
     goose sqlite3 ./foo.db status

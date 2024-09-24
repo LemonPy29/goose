@@ -24,6 +24,7 @@ const (
 	DialectVertica    Dialect = "vertica"
 	DialectYdB        Dialect = "ydb"
 	DialectStarrocks  Dialect = "starrocks"
+	DialectRisingwave Dialect = "risingwave"
 )
 
 // NewStore returns a new [Store] implementation for the given dialect.

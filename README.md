@@ -80,6 +80,7 @@ Drivers:
     vertica
     ydb
     starrocks
+    risingwave
 
 Examples:
     goose sqlite3 ./foo.db status

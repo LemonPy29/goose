@@ -71,6 +71,8 @@ func NewStore(d Dialect) (Store, error) {
 		querier = &dialectquery.Turso{}
 	case Starrocks:
 		querier = &dialectquery.Starrocks{}
+	case RisingWave:
+		querier = &dialectquery.Risingwave{}
 	default:
 		return nil, fmt.Errorf("unknown querier dialect: %v", d)
 	}
